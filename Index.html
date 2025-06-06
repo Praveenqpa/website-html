@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fuel Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #eef7f5;
+      padding: 20px;
+    }
+
+    .calculator {
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    h2, h3 {
+      text-align: center;
+      color: #00796b;
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: bold;
+    }
+
+    input[type="number"], input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #00796b;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #004d40;
+    }
+
+    .result {
+      text-align: center;
+      margin-top: 20px;
+      font-weight: bold;
+      color: #00796b;
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .row input {
+      flex: 1;
+    }
+
+    .small-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      margin-top: -8px;
+      margin-bottom: 4px;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="calculator">
+    <h2>Fuel Calculator</h2>
+
+    <label>Diesel Price (₹/Litre)</label>
+    <input type="number" id="dieselPrice" step="any">
+
+    <label>Petrol Price (₹/Litre)</label>
+    <input type="number" id="petrolPrice" step="any">
+
+    <label>Reading 1 (Diesel)</label>
+    <div class="small-labels"><span>New</span><span>Old</span></div>
+    <div class="row">
+      <input type="number" id="dNew1" placeholder="New">
+      <input type="number" id="dOld1" placeholder="Old">
+    </div>
+
+    <label>Reading 2 (Diesel)</label>
+    <div class="small-labels"><span>New</span><span>Old</span></div>
+    <div class="row">
+      <input type="number" id="dNew2" placeholder="New">
+      <input type="number" id="dOld2" placeholder="Old">
+    </div>
+
+    <label>Reading 3 (Petrol)</label>
+    <div class="small-labels"><span>New</span><span>Old</span></div>
+    <div class="row">
+      <input type="number" id="pNew1" placeholder="New">
+      <input type="number" id="pOld1" placeholder="Old">
+    </div>
+
+    <label>Reading 4 (Petrol)</label>
+    <div class="small-labels"><span>New</span><span>Old</span></div>
+    <div class="row">
+      <input type="number" id="pNew2" placeholder="New">
+      <input type="number" id="pOld2" placeholder="Old">
+    </div>
+
+    <button onclick="calculate()">Calculate</button>
+
+    <h3>Cash Denominations</h3>
+
+    <div class="row">
+      <input type="number" id="note2000" placeholder="₹2000 x Qty">
+      <input type="number" id="note500" placeholder="₹500 x Qty">
+    </div>
+    <div class="row">
+      <input type="number" id="note200" placeholder="₹200 x Qty">
+      <input type="number" id="note100" placeholder="₹100 x Qty">
+    </div>
+    <div class="row">
+      <input type="number" id="note50" placeholder="₹50 x Qty">
+      <input type="number" id="note20" placeholder="₹20 x Qty">
+    </div>
+    <div class="row">
+      <input type="number" id="note10" placeholder="₹10 x Qty">
+      <input type="number" id="coins" placeholder="Coins ₹">
+    </div>
+
+    <label>Enter Amount (Manual)</label>
+    <input type="text" id="enteredAmount" placeholder="Example: 1000+500+200 or 1500,1000">
+
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function calculate() {
+      const dPrice = parseFloat(document.getElementById('dieselPrice').value);
+      const pPrice = parseFloat(document.getElementById('petrolPrice').value);
+
+      if (!dPrice || !pPrice || dPrice <= 0 || pPrice <= 0) {
+        alert("Please enter valid Diesel and Petrol prices.");
+        return;
+      }
+
+      const dNew1 = parseFloat(document.getElementById('dNew1').value) || 0;
+      const dOld1 = parseFloat(document.getElementById('dOld1').value) || 0;
+      const dNew2 = parseFloat(document.getElementById('dNew2').value) || 0;
+      const dOld2 = parseFloat(document.getElementById('dOld2').value) || 0;
+      const pNew1 = parseFloat(document.getElementById('pNew1').value) || 0;
+      const pOld1 = parseFloat(document.getElementById('pOld1').value) || 0;
+      const pNew2 = parseFloat(document.getElementById('pNew2').value) || 0;
+      const pOld2 = parseFloat(document.getElementById('pOld2').value) || 0;
+
+      const d1 = dNew1 - dOld1;
+      const d2 = dNew2 - dOld2;
+      const p1 = pNew1 - pOld1;
+      const p2 = pNew2 - pOld2;
+
+      if (d1 < 0 || d2 < 0 || p1 < 0 || p2 < 0) {
+        alert("New readings must be greater than or equal to old readings.");
+        return;
+      }
+
+      const dieselLitres = d1 + d2;
+      const petrolLitres = p1 + p2;
+
+      const dieselAmount = dieselLitres * dPrice;
+      const petrolAmount = petrolLitres * pPrice;
+      const totalFuelAmount = dieselAmount + petrolAmount;
+
+      const cash =
+        (parseInt(document.getElementById('note2000').value) || 0) * 2000 +
+        (parseInt(document.getElementById('note500').value) || 0) * 500 +
+        (parseInt(document.getElementById('note200').value) || 0) * 200 +
+        (parseInt(document.getElementById('note100').value) || 0) * 100 +
+        (parseInt(document.getElementById('note50').value) || 0) * 50 +
+        (parseInt(document.getElementById('note20').value) || 0) * 20 +
+        (parseInt(document.getElementById('note10').value) || 0) * 10 +
+        (parseFloat(document.getElementById('coins').value) || 0);
+
+      // Parse multi-value entered amount
+      const enteredAmountText = document.getElementById('enteredAmount').value;
+      const enteredAmount = enteredAmountText
+        .split(/[\+,]/)
+        .map(val => parseFloat(val.trim()) || 0)
+        .reduce((sum, val) => sum + val, 0);
+
+      const totalEntered = cash + enteredAmount;
+      const diff = totalEntered - totalFuelAmount;
+
+      let status = '';
+      if (Math.abs(diff) < 0.01) {
+        status = `✅ Tally: Amount matches.`;
+      } else if (diff > 0) {
+        status = `🔺 Excess: ₹${diff.toFixed(2)} more than expected.`;
+      } else {
+        status = `🔻 Loss: ₹${Math.abs(diff).toFixed(2)} less than expected.`;
+      }
+
+      document.getElementById("result").innerHTML = `
+        🚛 Diesel: ${dieselLitres.toFixed(2)} L → ₹${dieselAmount.toFixed(2)}<br>
+        ⛽ Petrol: ${petrolLitres.toFixed(2)} L → ₹${petrolAmount.toFixed(2)}<br><br>
+        🧾 Total Fuel Amount: ₹${totalFuelAmount.toFixed(2)}<br>
+        💵 Cash: ₹${cash.toFixed(2)} | 🖊️ Entered: ₹${enteredAmount.toFixed(2)}<br>
+        🧮 Total Entered: ₹${totalEntered.toFixed(2)}<br><br>
+        📊 ${status}
+      `;
+    }
+  </script>
+
+</body>
+</html>
