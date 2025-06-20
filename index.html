@@ -1,36 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Neon Green Spiky Loader</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Centered Neon Loader</title>
   <style>
+    * {
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+    }
+
     html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  background: #000;
-  font-family: sans-serif;
-  overflow: hidden;
-}
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #000;
+      font-family: sans-serif;
+    }
 
-.wrapper {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
+    .fullscreen-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at center, #003300 0%, #000000 80%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
 
-.radial-bg {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at center, #003300 0%, #000000 80%);
-  z-index: -1;
-}
-
-/* loader-wrapper and spike code stays same */
+    .loader-wrapper {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      animation: pulse 2s ease-in-out infinite;
+    }
 
     .circle {
       position: absolute;
@@ -52,26 +59,27 @@
       position: absolute;
       top: 0;
       left: 50%;
-      width: 3%;
-      height: 18%;
+      width: 4px;
+      height: 25px;
       background: #00ff00;
       box-shadow: 0 0 10px #00ff00;
       transform-origin: bottom center;
       animation: glow 1.5s ease-in-out infinite;
     }
 
-    .spikes .spike:nth-child(1)  { transform: rotate(0deg); }
-    .spikes .spike:nth-child(2)  { transform: rotate(30deg); }
-    .spikes .spike:nth-child(3)  { transform: rotate(60deg); }
-    .spikes .spike:nth-child(4)  { transform: rotate(90deg); }
-    .spikes .spike:nth-child(5)  { transform: rotate(120deg); }
-    .spikes .spike:nth-child(6)  { transform: rotate(150deg); }
-    .spikes .spike:nth-child(7)  { transform: rotate(180deg); }
-    .spikes .spike:nth-child(8)  { transform: rotate(210deg); }
-    .spikes .spike:nth-child(9)  { transform: rotate(240deg); }
-    .spikes .spike:nth-child(10) { transform: rotate(270deg); }
-    .spikes .spike:nth-child(11) { transform: rotate(300deg); }
-    .spikes .spike:nth-child(12) { transform: rotate(330deg); }
+    /* Spike positions */
+    .spike:nth-child(1)  { transform: rotate(0deg); }
+    .spike:nth-child(2)  { transform: rotate(30deg); }
+    .spike:nth-child(3)  { transform: rotate(60deg); }
+    .spike:nth-child(4)  { transform: rotate(90deg); }
+    .spike:nth-child(5)  { transform: rotate(120deg); }
+    .spike:nth-child(6)  { transform: rotate(150deg); }
+    .spike:nth-child(7)  { transform: rotate(180deg); }
+    .spike:nth-child(8)  { transform: rotate(210deg); }
+    .spike:nth-child(9)  { transform: rotate(240deg); }
+    .spike:nth-child(10) { transform: rotate(270deg); }
+    .spike:nth-child(11) { transform: rotate(300deg); }
+    .spike:nth-child(12) { transform: rotate(330deg); }
 
     .loader-text {
       position: absolute;
@@ -80,12 +88,12 @@
       transform: translateY(-50%);
       text-align: center;
       color: #00ff00;
-      font-size: 4vw;
+      font-size: 18px;
       text-shadow: 0 0 10px #00ff00;
     }
 
     @keyframes rotate {
-      0%   { transform: rotate(0deg); }
+      0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
 
@@ -101,34 +109,33 @@
   </style>
 </head>
 <body>
-  <div class="wrapper">
-    <div class="radial-bg"></div>
 
-    <div id="loader" class="loader-wrapper">
-      <div class="circle"></div>
-      <div class="spikes">
-        <!-- 12 spikes -->
-        <div class="spike"></div>
-        <div class="spike"></div>
-        <div class="spike"></div>
-        <div class="spike"></div>
-        <div class="spike"></div>
-        <div class="spike"></div>
-        <div class="spike"></div>
-        <div class="spike"></div>
-        <div class="spike"></div>
-        <div class="spike"></div>
-        <div class="spike"></div>
-        <div class="spike"></div>
-      </div>
-      <div class="loader-text">Loading...</div>
+<div class="fullscreen-container">
+  <div class="loader-wrapper">
+    <div class="circle"></div>
+    <div class="spikes">
+      <div class="spike"></div>
+      <div class="spike"></div>
+      <div class="spike"></div>
+      <div class="spike"></div>
+      <div class="spike"></div>
+      <div class="spike"></div>
+      <div class="spike"></div>
+      <div class="spike"></div>
+      <div class="spike"></div>
+      <div class="spike"></div>
+      <div class="spike"></div>
+      <div class="spike"></div>
     </div>
+    <div class="loader-text">Loading...</div>
   </div>
+</div>
 
-  <script>
-    setTimeout(() => {
-      window.location.href = "page.html";
-    }, 5000);
-  </script>
+<script>
+  setTimeout(() => {
+    window.location.href = "page.html";
+  }, 5000);
+</script>
+
 </body>
 </html>
