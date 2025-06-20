@@ -6,33 +6,31 @@
   <title>Neon Green Spiky Loader</title>
   <style>
     html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: sans-serif;
-      overflow: hidden;
-    }
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #000;
+  font-family: sans-serif;
+  overflow: hidden;
+}
 
-    .radial-bg {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at center, #003300 0%, #000000 80%);
-      z-index: -1;
-    }
+.wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
 
-    .loader-wrapper {
-      position: relative;
-      width: 35vw;
-      height: 35vw;
-      max-width: 180px;
-      max-height: 180px;
-      animation: pulse 2s ease-in-out infinite;
-    }
+.radial-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, #003300 0%, #000000 80%);
+  z-index: -1;
+}
+
+/* loader-wrapper and spike code stays same */
 
     .circle {
       position: absolute;
@@ -103,39 +101,34 @@
   </style>
 </head>
 <body>
+  <div class="wrapper">
+    <div class="radial-bg"></div>
 
-<div class="radial-bg"></div>
-
-<div id="loader" class="loader-wrapper">
-  <div class="circle"></div>
-  <div class="spikes">
-    <!-- 12 glowing spikes -->
-    <div class="spike"></div>
-    <div class="spike"></div>
-    <div class="spike"></div>
-    <div class="spike"></div>
-    <div class="spike"></div>
-    <div class="spike"></div>
-    <div class="spike"></div>
-    <div class="spike"></div>
-    <div class="spike"></div>
-    <div class="spike"></div>
-    <div class="spike"></div>
-    <div class="spike"></div>
+    <div id="loader" class="loader-wrapper">
+      <div class="circle"></div>
+      <div class="spikes">
+        <!-- 12 spikes -->
+        <div class="spike"></div>
+        <div class="spike"></div>
+        <div class="spike"></div>
+        <div class="spike"></div>
+        <div class="spike"></div>
+        <div class="spike"></div>
+        <div class="spike"></div>
+        <div class="spike"></div>
+        <div class="spike"></div>
+        <div class="spike"></div>
+        <div class="spike"></div>
+        <div class="spike"></div>
+      </div>
+      <div class="loader-text">Loading...</div>
+    </div>
   </div>
-  <div class="loader-text">Loading...</div>
-</div>
 
-<div id="mainContent">
-  <h1>✅ Loaded!</h1>
-  <p>Welcome to the Green Neon Universe!</p>
-</div>
-
-<script>
-  setTimeout(() => {
-  window.location.href = "page.html"; // 🔁 replace with your page name
-  }, 5000);
-</script>
-
+  <script>
+    setTimeout(() => {
+      window.location.href = "page.html";
+    }, 5000);
+  </script>
 </body>
 </html>
