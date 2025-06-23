@@ -12,14 +12,27 @@
     }
 
     html, body {
-      width: 0vw;
-      height: 0vh;
-      background-color: #000;
-      overflow: hidden;
-      font-family: sans-serif;
-      position: fixed;
-      inset: 0;
-    }
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #000;
+  overflow: hidden;
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fullscreen-container {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, #003300 0%, #000000 80%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 
     .fullscreen-container {
       position: fixed;
