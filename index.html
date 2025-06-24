@@ -9,6 +9,46 @@
       font-family: Arial, sans-serif;
       background: #eef7f5;
       padding: 20px;
+      margin: 0;
+    }
+
+    /* Loader Styles */
+    #loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .neon-loader {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 6px solid #00ff99;
+      box-shadow: 0 0 20px #00ff99, 0 0 40px #00ff99, 0 0 60px #00ff99;
+      animation: pulse 1.2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 10px #00ff99, 0 0 20px #00ff99, 0 0 30px #00ff99;
+      }
+      50% {
+        transform: scale(1.2);
+        box-shadow: 0 0 20px #00ff99, 0 0 40px #00ff99, 0 0 60px #00ff99;
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 10px #00ff99, 0 0 20px #00ff99, 0 0 30px #00ff99;
+      }
     }
 
     .calculator {
@@ -18,6 +58,7 @@
       max-width: 600px;
       margin: auto;
       box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      display: none; /* Hidden initially */
     }
 
     h2, h3 {
@@ -79,45 +120,58 @@
       margin-bottom: 4px;
       color: #444;
     }
+
+    @media (max-width: 500px) {
+      .row {
+        flex-direction: column;
+      }
+    }
   </style>
 </head>
 <body>
 
+  <!-- Loader -->
+  <div id="loader">
+    <div class="neon-loader"></div>
+    <div style="margin-top: 20px; color: #00ff99; font-size: 20px;">Loading Praveen Hacks...</div>
+  </div>
+
+  <!-- Calculator -->
   <div class="calculator">
     <h2>Praveen Hacks</h2>
 
     <label>Diesel Price (₹/Litre)</label>
-    <input type="number" id="dieselPrice" step="any">
+    <input type="number" id="dieselPrice" step="any" min="0">
 
     <label>Petrol Price (₹/Litre)</label>
-    <input type="number" id="petrolPrice" step="any">
+    <input type="number" id="petrolPrice" step="any" min="0">
 
     <label>Reading 1 (Diesel)</label>
     <div class="small-labels"><span>New</span><span>Old</span></div>
     <div class="row">
-      <input type="number" id="dNew1" placeholder="New">
-      <input type="number" id="dOld1" placeholder="Old">
+      <input type="number" id="dNew1" placeholder="New" min="0">
+      <input type="number" id="dOld1" placeholder="Old" min="0">
     </div>
 
     <label>Reading 2 (Diesel)</label>
     <div class="small-labels"><span>New</span><span>Old</span></div>
     <div class="row">
-      <input type="number" id="dNew2" placeholder="New">
-      <input type="number" id="dOld2" placeholder="Old">
+      <input type="number" id="dNew2" placeholder="New" min="0">
+      <input type="number" id="dOld2" placeholder="Old" min="0">
     </div>
 
     <label>Reading 3 (Petrol)</label>
     <div class="small-labels"><span>New</span><span>Old</span></div>
     <div class="row">
-      <input type="number" id="pNew1" placeholder="New">
-      <input type="number" id="pOld1" placeholder="Old">
+      <input type="number" id="pNew1" placeholder="New" min="0">
+      <input type="number" id="pOld1" placeholder="Old" min="0">
     </div>
 
     <label>Reading 4 (Petrol)</label>
     <div class="small-labels"><span>New</span><span>Old</span></div>
     <div class="row">
-      <input type="number" id="pNew2" placeholder="New">
-      <input type="number" id="pOld2" placeholder="Old">
+      <input type="number" id="pNew2" placeholder="New" min="0">
+      <input type="number" id="pOld2" placeholder="Old" min="0">
     </div>
 
     <button onclick="calculate()">Calculate</button>
@@ -125,20 +179,20 @@
     <h3>Cash Denominations</h3>
 
     <div class="row">
-      <input type="number" id="note2000" placeholder="₹2000 x Qty">
-      <input type="number" id="note500" placeholder="₹500 x Qty">
+      <input type="number" id="note2000" placeholder="₹2000 x Qty" min="0">
+      <input type="number" id="note500" placeholder="₹500 x Qty" min="0">
     </div>
     <div class="row">
-      <input type="number" id="note200" placeholder="₹200 x Qty">
-      <input type="number" id="note100" placeholder="₹100 x Qty">
+      <input type="number" id="note200" placeholder="₹200 x Qty" min="0">
+      <input type="number" id="note100" placeholder="₹100 x Qty" min="0">
     </div>
     <div class="row">
-      <input type="number" id="note50" placeholder="₹50 x Qty">
-      <input type="number" id="note20" placeholder="₹20 x Qty">
+      <input type="number" id="note50" placeholder="₹50 x Qty" min="0">
+      <input type="number" id="note20" placeholder="₹20 x Qty" min="0">
     </div>
     <div class="row">
-      <input type="number" id="note10" placeholder="₹10 x Qty">
-      <input type="number" id="coins" placeholder="Coins ₹">
+      <input type="number" id="note10" placeholder="₹10 x Qty" min="0">
+      <input type="number" id="coins" placeholder="Coins ₹" min="0">
     </div>
 
     <label>Enter Amount</label>
@@ -148,6 +202,14 @@
   </div>
 
   <script>
+    // Show calculator after 5 seconds
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').style.display = 'none';
+        document.querySelector('.calculator').style.display = 'block';
+      }, 5000);
+    });
+
     function calculate() {
       const dPrice = parseFloat(document.getElementById('dieselPrice').value);
       const pPrice = parseFloat(document.getElementById('petrolPrice').value);
@@ -193,7 +255,6 @@
         (parseInt(document.getElementById('note10').value) || 0) * 10 +
         (parseFloat(document.getElementById('coins').value) || 0);
 
-      // Parse multi-value entered amount
       const enteredAmountText = document.getElementById('enteredAmount').value;
       const enteredAmount = enteredAmountText
         .split(/[\+,]/)
@@ -212,7 +273,9 @@
         status = `🔻 Loss: ₹${Math.abs(diff).toFixed(2)} less than expected.`;
       }
 
-      document.getElementById("result").innerHTML = `
+      const resultEl = document.getElementById("result");
+      resultEl.style.color = diff === 0 ? "green" : diff > 0 ? "orange" : "red";
+      resultEl.innerHTML = `
         🚛 Diesel: ${dieselLitres.toFixed(2)} L → ₹${dieselAmount.toFixed(2)}<br>
         ⛽ Petrol: ${petrolLitres.toFixed(2)} L → ₹${petrolAmount.toFixed(2)}<br><br>
         🧾 Total Fuel Amount: ₹${totalFuelAmount.toFixed(2)}<br>
@@ -224,4 +287,4 @@
   </script>
 
 </body>
-</html>
+  </html>
